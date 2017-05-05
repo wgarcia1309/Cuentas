@@ -8,6 +8,7 @@ package vista;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
 import lab2.pkg1_willian_garcia_william_morelo.Nodo;
 import static vista.Principal.end;
@@ -129,14 +130,39 @@ public class Registar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try{
+            StringTokenizer st1 = new StringTokenizer(fecha.getText(),"/");
             if(monto.getText().equals("") || cta.getText().equals("") || fecha.getText().equals(""))
             JOptionPane.showMessageDialog(null, "nos es posible crear la cuenta con campos vacios");
             else if(Float.parseFloat(monto.getText())<100000) JOptionPane.showMessageDialog(null, "nos es posible crear la cuenta monto minimo 100000");
-            else crear();
+            else if(st1.countTokens()!=3 ){
+            JOptionPane.showMessageDialog(null, "Error formato invalido");
+            }else{
+                try{
+                int d1,m1,a1,d2,m2,a2;
+                    d1=Integer.parseInt(st1.nextToken());
+                    m1=Integer.parseInt(st1.nextToken());
+                    a1=Integer.parseInt(st1.nextToken());
+                    if(a1<0){
+                        JOptionPane.showMessageDialog(null, "Error años no pueden ser negativos");
+                    }else if(m1<=0 || m1>12){
+                        JOptionPane.showMessageDialog(null, "Error meses fuera de los limites");
+                    }else if(d1<=0 || //dias negativos
+                            ((m1==1 || m1==3 || m1==5 || m1==7 || m1==8 || m1==10 || m1==12) && d1>31)||//+31 dias
+                            (m1==2 && d1>28) ||//+28dias
+                            ((m1==4 || m1==6 || m1==9 || m1==11) && d1>28)) {
+                        JOptionPane.showMessageDialog(null, "Error dias fuera de los limites");
+                    }else crear();
+                }catch(NumberFormatException e){
+                    JOptionPane.showMessageDialog(null, "Error fecha solo puede ser numerico");
+                }   
+            }
         }catch(NumberFormatException e){
             JOptionPane.showMessageDialog(null, "Error monto solo puede ser numerico");
         }
-       mostrar();
+        fecha.setText("");
+        monto.setText("");
+        cta.setText("");
+       mostrar(new SimpleDateFormat("dd/MM/yyyy"));
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -166,10 +192,10 @@ public class Registar extends javax.swing.JFrame {
         }
         
 }
-    public void mostrar(){
+    public void mostrar(SimpleDateFormat ft){
         Nodo aux=root;
        while(aux!=null){
-           System.out.println(aux.getNro()+" "+aux.getFecha());
+           System.out.println(aux.getNro()+" "+ ft.format(aux.getFecha())+" "+aux.getMonto());
            aux=aux.getRl();
        }
        if(root!=null && end!=null)System.out.println("root "+root.getNro()+" end "+end.getNro());

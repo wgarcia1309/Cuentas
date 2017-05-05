@@ -5,6 +5,9 @@
  */
 package vista;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 import javax.swing.JOptionPane;
 import lab2.pkg1_willian_garcia_william_morelo.Nodo;
@@ -40,6 +43,7 @@ public class Consulta extends javax.swing.JFrame {
         f1 = new javax.swing.JTextField();
         f2 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -65,22 +69,31 @@ public class Consulta extends javax.swing.JFrame {
 
         jLabel2.setText("Formato de entrada DD/MM/AAAA");
 
+        jLabel4.setText("Exclusiva");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(f1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(f2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(59, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(f1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(f2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel2)
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel4)))
+                        .addGap(0, 18, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,9 +102,11 @@ public class Consulta extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(f1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(f2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addGap(4, 4, 4)
+                .addGap(9, 9, 9)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
                 .addGap(6, 6, 6))
         );
@@ -154,7 +169,7 @@ public class Consulta extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                         .addComponent(jButton4)
                         .addGap(57, 57, 57))
                     .addGroup(layout.createSequentialGroup()
@@ -193,6 +208,7 @@ public class Consulta extends javax.swing.JFrame {
     }catch(NumberFormatException e) {
         JOptionPane.showMessageDialog(null,"Error el n° de cuenta debe ser numerico");
     }
+    cta.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
     private void buscar(long num){
         Nodo temp=root;
@@ -212,7 +228,15 @@ public class Consulta extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         calEx();
     }//GEN-LAST:event_jButton2ActionPerformed
-
+ private void calEx(){
+        Nodo temp=root;
+        float res=0f;
+        while(temp!=null){
+                if(!temp.isB())res+=temp.getMonto();
+         temp=temp.getRl();
+        }
+        JOptionPane.showMessageDialog(null, "El dinero extraido hasta la fecha es de "+res);
+    }
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         this.dispose();
         Principal v1= new Principal();
@@ -236,26 +260,34 @@ public class Consulta extends javax.swing.JFrame {
                 if(a1<0 || a2<0){
                     JOptionPane.showMessageDialog(null, "Error años no pueden ser negativos");
                 }else if(m1<=0 ||m2<=0 || m1>12 ||m2>12){
-                    JOptionPane.showMessageDialog(null, "Error meses duera de los limites");
-                }else if (d1<=0 || d2<=0 || ( (m1==1 || m1==3 || m1==5 || m1==7 || m1==8 )  ) || () || () ){
-                    JOptionPane.showMessageDialog(null, "Error dias duera de los limites");
+                    JOptionPane.showMessageDialog(null, "Error meses fuera de los limites");
+                }else if(d1<=0 || d2<=0 || //dias negativos
+                        ((m1==1 || m1==3 || m1==5 || m1==7 || m1==8 || m1==10 || m1==12) && d1>31) || ( (m2==1 || m2==3 || m2==5 || m2==7 || m2==8 || m2==10 ||m2==12) && d2>31) ||//+31 dias
+                        (m1==2 && d1>28) || (m2==2 && d2>28) ||//+28dias
+                        ((m1==4 || m1==6 || m1==9 || m1==11) && d1>28) || ( (m2==4 || m2==6 || m2==9 || m2==11) && d2>28)) {
+                    JOptionPane.showMessageDialog(null, "Error dias fuera de los limites");
                 }else{
-                
+                    fechas(new GregorianCalendar(a1, m1-1, d1).getTime(),new GregorianCalendar(a2, m2-1, d2).getTime());
                 }
             }catch(NumberFormatException e){
                 JOptionPane.showMessageDialog(null, "Error debe escribir en numeros");
             }
         }
+        f1.setText("");
+        f2.setText("");
     }//GEN-LAST:event_jButton3ActionPerformed
-     private void calEx(){
+    private void fechas(Date dt1, Date dt2){
+        SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy");
         Nodo temp=root;
-        float res=0f;
-        boolean b=true;
+        float sum=0f;
         while(temp!=null){
-                if(!temp.isB())res+=temp.getMonto();
-         temp=temp.getRl();
+            if(temp.isB() && (temp.getFecha().after(dt1) && temp.getFecha().before(dt2))){
+                sum+=temp.getMonto();
+                System.out.println(temp.getNro()+" "+ ft.format(temp.getFecha())+" "+temp.getMonto());
+            }
+            temp=temp.getRl();
         }
-        JOptionPane.showMessageDialog(null, "El dinero extraido hasta la fecha es de "+res);
+        JOptionPane.showMessageDialog(null, "El dinero extraido hasta la fecha es de "+sum);
     }
     /**
      * @param args the command line arguments
@@ -304,6 +336,7 @@ public class Consulta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
