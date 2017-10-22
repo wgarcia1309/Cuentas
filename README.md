@@ -6,6 +6,7 @@
 <li>:moneybag:Consultar saldo extraido de una cuenta:moneybag:</li>
 <li>:clock130:Consultar saldo extraido de una fecha a otra:clock8:</li>
 <br></br>
-Hecho por:
+
+Este es un laboratorio hecho por:
 - [Willian Garcia](https://github.com/wgarcia1309)
 - [William Morelo](https://github.com/Mwilliam98)
